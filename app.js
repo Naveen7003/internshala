@@ -23,6 +23,10 @@ app.use(session({
 }))
 app.use(cookieparser());
 
+//file upload
+const fileupload = require('express-fileupload');
+app.use(fileupload());
+
 app.use("/", require('./routes/indexRoutes'));
 
 //Error handler
