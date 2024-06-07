@@ -31,6 +31,8 @@ app.use("/user", require('./routes/indexRoutes'));
 
 app.use("/resume", require('./routes/resumeRoutes'));
 
+app.use("/employe", require('./routes/employeRoutes'));
+
 //Error handler
 const ErrorHandler = require("./utils/errorHandler");
 const {generatedErrors} = require("./Middlewares/error")

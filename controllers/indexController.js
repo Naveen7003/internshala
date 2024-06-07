@@ -1,5 +1,7 @@
 const { catchAsyncErrors } = require("../Middlewares/catchAsyncError");
 const Student = require('../Models/studentModel');
+const Internship = require('../Models/internshipModel');
+const Job = require('../Models/jobModel');
 const ErrorHandler = require("../utils/errorHandler");
 const {sendtoken} = require("../utils/sendToken");
 const {sendmail} = require("../utils/nodemailer");
@@ -113,3 +115,26 @@ exports.studentavatar = catchAsyncErrors( async (req, res, next)=>{
                 message: "profile updated!"
         })
 });
+
+//------------apply internships--------------
+exports.applyinternship = catchAsyncErrors(async(req, res, next)=>{
+        const student = await Student.findById(req.id).exec();
+        const internship = await Internship.findById(req.params.internshipid).exec();
+        student.internships.push(internship._id)
+        internship.student.push(student._id)
+        await student.save()
+        await internship.save()
+        res.json({student,internship})
+})
+
+
+//------------apply jobs--------------
+exports.applyjob = catchAsyncErrors(async(req, res, next)=>{
+        const student = await Student.findById(req.id).exec();
+        const job = await Job.findById(req.params.jobid).exec();
+        student.jobs.push(job._id)
+        job.student.push(student._id)
+        await student.save()
+        await job.save()
+        res.json({student,job})
+})

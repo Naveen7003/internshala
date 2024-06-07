@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const studentModel = new mongoose.Schema({
+const employeModel = new mongoose.Schema({
    firstname:{
    type:String,
    required:[true,"First Name is required"],
@@ -19,15 +19,6 @@ const studentModel = new mongoose.Schema({
     maxLength:[10,"Contact should not exceed more than 10 characters"],
     minLength:[10,"Contact should be atleast more than 9 characters"],
     },
-   city:{
-    type:String,
-    required:[true,"City Name is required"],
-    maxLength:[7,"City Name should not exceed more than 7 characters"],
-    },
-   gender:{
-    type:String,
-    enum: ["Male", "Female", "Others"]
-   },
    email:{
     type:String,
     required:[true,"Email is required"],
@@ -45,34 +36,29 @@ const studentModel = new mongoose.Schema({
     type:String,
     default:"0"
    },
-   avatar:{
+   organizationname:{
+    type:String,
+    required:[true,"Organization Name is required"],
+    maxLength:[10,"Organization Name should not exceed more than 10 characters"],
+    },
+   companylogo:{
     type: Object,
     default:{
         fileId:"",
         url:"https://images.unsplash.com/photo-1682905926517-6be3768e29f0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8"
     },
     },
-    resume:{
-        education:[],
-        jobs: [],
-        internships:[],
-        responsibilities: [],
-        courses: [],
-        projects: [],
-        skills: [],
-        accomplishments: [],
-   },
-   internships:[ 
-    {type: mongoose.Schema.Types.ObjectId, ref:"internships"}
-                ],
-   jobs: [
-    {type: mongoose.Schema.Types.ObjectId, ref:"jobs"}
-        ],
-    },
+    internships:[ 
+        {type: mongoose.Schema.Types.ObjectId, ref:"internships"}
+    ],
+    jobs: [
+        {type: mongoose.Schema.Types.ObjectId, ref:"jobs"}
+    ],
+},
     {timestamps: true}
 );
 
-studentModel.pre("save", function(){
+employeModel.pre("save", function(){
     if(!this.isModified("password")){
         return;
     }
@@ -81,12 +67,12 @@ studentModel.pre("save", function(){
     this.password = bcrypt.hashSync(this.password, salt)
 })
 
-studentModel.methods.comparepassword = function(password){
+employeModel.methods.comparepassword = function(password){
     return bcrypt.compareSync(password, this.password);
 }
 
-studentModel.methods.getjwttoken = function(){
+employeModel.methods.getjwttoken = function(){
     return jwt.sign({id: this._id}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE})
 }
 
-module.exports = mongoose.model("Student", studentModel);
+module.exports = mongoose.model("Employe", employeModel);
