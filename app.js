@@ -1,6 +1,7 @@
 require("dotenv").config({path: './.env'})
 const express = require('express');
 const app = express();
+const MongoStore = require('connect-mongo');
 
 //database
 require("./Models/database").connectDatabase();
@@ -20,7 +21,7 @@ app.use(session({
     resave:true,
     saveUninitialized: true,
     secret: process.env.EXPRESS_SESSION_SECRET,
-    store: MongoStore.create({ mongoUrl:` process.env.MONGO_URL` })
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL })
 }))
 app.use(cookieparser());
 
