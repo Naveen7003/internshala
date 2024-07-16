@@ -19,7 +19,8 @@ const cookieparser = require('cookie-parser');
 app.use(session({
     resave:true,
     saveUninitialized: true,
-    secret: process.env.EXPRESS_SESSION_SECRET
+    secret: process.env.EXPRESS_SESSION_SECRET,
+    store: MongoStore.create({ mongoUrl:` process.env.MONGO_URL` })
 }))
 app.use(cookieparser());
 
