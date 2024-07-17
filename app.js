@@ -35,6 +35,12 @@ app.use("/resume", require('./routes/resumeRoutes'));
 
 app.use("/employe", require('./routes/employeRoutes'));
 
+// Root URL handler
+app.get("/", (req, res) => {
+    res.send("Welcome to the API");
+});
+
+
 //Error handler
 const ErrorHandler = require("./utils/errorHandler");
 const {generatedErrors} = require("./Middlewares/error")
