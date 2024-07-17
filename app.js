@@ -44,4 +44,8 @@ app.all("*", (req,res,next)=>{
 app.use(generatedErrors);
     
 
-app.listen(process.env.PORT, console.log(`server is running on port ${process.env.PORT}`))
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});

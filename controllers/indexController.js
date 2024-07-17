@@ -9,7 +9,6 @@ const imageKit = require("../utils/imageKit").initImageKit();
 const path = require('path');
 
 exports.homepage = catchAsyncErrors( async (req, res, next)=>{ 
-        console.log("welcome to website")   
         res.json({message: "homepage"})   
 });
 
