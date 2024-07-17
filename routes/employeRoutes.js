@@ -4,7 +4,7 @@ const { homepage,currentemploye ,employeSignup , employesignin, employesignout,r
 const { isAuthenticated } = require('../Middlewares/auth');
 
 //get
-router.get('/',  homepage)
+router.get('/homepage',  homepage)
 
 //get/employe
 router.post('/current', isAuthenticated, currentemploye)
